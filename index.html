@@ -15,24 +15,30 @@
 
         <div id="main">
             <div id="main-header">
-                <button class="add-button">+ Add book</button>
-            </div>
-            <div id="main-content">
-                <!-- Dummy Content -->
-                <!-- <div class="card">
-                    <p>Title</p>
-                    <p>Author</p>
-                    <p>12 pages</p>
-                    <button class="read-button">Not read</button>
-                    <button class="remove-button">Remove</button>
+                <div id="dialog-container">
+                    
+                    <dialog id="favDialog">
+                        <form id="dialogForm">
+                            <div id="form-title">
+                                <p>Add new book</p>
+                            </div>
+                            <input id="title" type="text" placeholder="Title" required>
+                            <input id="author" type="text" placeholder="Author" required>
+                            <input id="pages" type="number" placeholder="Pages" required>
+                            <label id="read-label">
+                                <p>Have you read it?</p>
+                                <input id="read" type="checkbox">
+                            </label>
+                            <button id="submitBtn" value="default">Submit</button>
+                            <!-- <button id="cancelBtn" value="cancel" formmethod="dialog">Cancel</button> -->
+                        </form>
+                    </dialog>
                 </div>
-                <div class="card">
-                    <p>Title2</p>
-                    <p>Author2</p>
-                    <p>12 pages</p>
-                    <button class="not-read-button">Not read</button>
-                    <button class="remove-button">Remove</button>
-                </div> -->
+                    <button id="showDialog" class="add-button">+ Add book</button>
+            </div>
+
+            <div id="main-content">
+            
             </div>
 
         </div>
