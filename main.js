@@ -1,6 +1,4 @@
-const myLibrary = [
-    
-    {
+const myLibrary = [{
         title: 'The ONE Thing',
         author: 'Gary Keller',
         pages: '240',
@@ -38,7 +36,7 @@ function Book(title, author, pages, read) {
     this.author = author
     this.pages = pages
     this.read = read
-    this.info = function() {
+    this.info = function () {
         return `${title} by ${author}, ${pages} pages, ${read}`
     }
 };
@@ -59,7 +57,7 @@ function arrayLoop() {
         let removeButton = document.createElement("button");
 
         // Create card
-        cardDiv.className= 'card';
+        cardDiv.className = 'card';
         cardDiv.id = 'book-' + [i];
 
         // Add values to p elements
@@ -69,10 +67,10 @@ function arrayLoop() {
 
         // Add values to buttons
         if (myLibrary[i].read === 'false') {
-            readButton.className = 'not-read-button'
+            readButton.className = `book-` + [i] + ' read-button not-read'
             readButton.textContent = "Not read"
         } else if (myLibrary[i].read === 'true') {
-            readButton.className = 'read-button'
+            readButton.className = `book-` + [i] + ' read-button read'
             readButton.textContent = "Read"
         }
 
@@ -88,7 +86,7 @@ function arrayLoop() {
 
         // Add card to library list
         mainContent.appendChild(cardDiv);
-      }
+    }
 }
 
 // Run the arrayLoop function to display all books
@@ -105,7 +103,7 @@ const submitBtn = favDialog.querySelector("#submitBtn");
 
 // "Show the dialog" button opens the <dialog> modally
 showButton.addEventListener("click", () => {
-  favDialog.showModal();
+    favDialog.showModal();
 });
 
 // Submit new book
@@ -120,7 +118,7 @@ submitBtn.addEventListener("click", (event) => {
 function formValidation() {
     if (document.getElementById("dialogForm").checkValidity()) {
         // Modify checkbox values
-        if(newRead.checked) {
+        if (newRead.checked) {
             newRead.value = true;
         } else {
             newRead.value = false;
@@ -134,7 +132,7 @@ function formValidation() {
 
         // Loop through library array to refresh the display
         arrayLoop();
-        
+
         // Reset form
         document.getElementById("dialogForm").reset();
 
@@ -143,29 +141,63 @@ function formValidation() {
 
         // Reattach removeEventListener
         attachRemoveEventListeners();
-    } else if (newTitle.value === "" || newAuthor.value === "" || newPages.value === ""){
-            // error message
-            document.getElementById("errorMessage").textContent = "Please fill out all required (*) fields";
+
+        // Reattach readEventListener
+        attachReadEventListeners();
+    } else if (newTitle.value === "" || newAuthor.value === "" || newPages.value === "") {
+        // error message
+        document.getElementById("errorMessage").textContent = "Please fill out all required (*) fields";
     }
 }
 
 function attachRemoveEventListeners() {
-    document.querySelectorAll(".remove-button").forEach(function(e) {
-    e.addEventListener("click", function() {
-        // Get the index of the book from the class name
-        const index = parseInt(e.classList[1].split('-')[1]);
+    document.querySelectorAll(".remove-button").forEach(function (e) {
+        e.addEventListener("click", function () {
+            // Get the index of the book from the class name
+            const index = parseInt(e.classList[1].split('-')[1]);
 
-        // Remove book from library array
-        myLibrary.splice(index, 1);
+            // Remove book from library array
+            myLibrary.splice(index, 1);
 
-        // Refresh library display
-        arrayLoop();
+            // Refresh library display
+            arrayLoop();
 
-        // Reattach the remove event listener
-        attachRemoveEventListeners();
+            // Reattach the remove event listener
+            attachRemoveEventListeners();
+
+            // Reattach readEventListener
+            attachReadEventListeners();
+        });
     });
-});
 }
 
 // Initial attachment of remove event listener
 attachRemoveEventListeners();
+
+function attachReadEventListeners() {
+    document.querySelectorAll(".read-button").forEach(function (e) {
+        e.addEventListener("click", function () {
+            // Get the index of the book from the class name
+            const index = parseInt(e.classList[0].split('-')[1]);
+
+            // Switch read status
+            if (myLibrary[index].read === 'true') {
+                myLibrary[index].read = 'false'
+            } else {
+                myLibrary[index].read = 'true'
+            }
+
+            // Refresh library display
+            arrayLoop();
+
+            // Reattach the remove event listener
+            attachRemoveEventListeners();
+
+            // Reattach the read event listener
+            attachReadEventListeners();
+        });
+    });
+}
+
+// Initial attachment of remove event listener
+attachReadEventListeners();

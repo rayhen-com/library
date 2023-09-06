@@ -87,19 +87,19 @@ header {
     background-color: #d7d7d7;
 }
 
-.not-read-button {
+.not-read {
     background-color: #f1a19e;
 }
 
-.not-read-button:hover {
+.not-read:hover {
     background-color: #d9918e;
 }
 
-.read-button {
+.read {
     background-color: #b5fda6;
 }
 
-.read-button:hover {
+.read:hover {
     background-color: #a3e495;
 }
 
@@ -121,11 +121,12 @@ header {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-.card > p {
+.card>p {
     padding: 10px;
 }
 
-#read-label, #form-title {
+#read-label,
+#form-title {
     display: flex;
     gap: 15px;
     justify-content: center;
