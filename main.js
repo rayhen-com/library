@@ -75,15 +75,15 @@ function arrayLoop() {
             readButton.textContent = "Read"
         }
 
-        removeButton.classList.add("remove-button")
-        removeButton.textContent = "Remove"
+        removeButton.classList.add("remove-button");
+        removeButton.textContent = "Remove";
 
         // Add variables to card
         cardDiv.appendChild(titlePara);
         cardDiv.appendChild(authorPara);
         cardDiv.appendChild(pagesPara);
-        cardDiv.appendChild(readButton)
-        cardDiv.appendChild(removeButton)
+        cardDiv.appendChild(readButton);
+        cardDiv.appendChild(removeButton);
 
         // Add card to library list
         mainContent.appendChild(cardDiv);
@@ -95,7 +95,6 @@ arrayLoop();
 // Get form elements
 const showButton = document.getElementById("showDialog");
 const favDialog = document.getElementById("favDialog");
-const form = document.querySelector("dialogForm");
 const newTitle = favDialog.querySelector("#title");
 const newAuthor = favDialog.querySelector("#author");
 const newPages = favDialog.querySelector("#pages");
@@ -107,32 +106,40 @@ showButton.addEventListener("click", () => {
   favDialog.showModal();
 });
 
-// Submit
+// Submit new book
 submitBtn.addEventListener("click", (event) => {
     // Prevent submission to server
     event.preventDefault();
 
-    // Modify checkbox values
-    if(newRead.checked) {
-        newRead.value = true;
-    } else {
-        newRead.value = false;
-    }
-
-    // Create new book object
-    let newBook = new Book(newTitle.value, newAuthor.value, newPages.value, newRead.value);
-
-    // Add the new object to the Library array
-    myLibrary.push(newBook);
-
-    // Loop through library array to refresh the display
-    arrayLoop();
-    
-    // Reset form
-    document.getElementById("dialogForm").reset();
-
-    // Close dialog
-    favDialog.close(); // Have to send the select box value here.
-
+    // Validate form
+    formValidation();
 });
 
+function formValidation() {
+    if (document.getElementById("dialogForm").checkValidity()) {
+        // Modify checkbox values
+        if(newRead.checked) {
+            newRead.value = true;
+        } else {
+            newRead.value = false;
+        }
+
+        // Create new book object
+        let newBook = new Book(newTitle.value, newAuthor.value, newPages.value, newRead.value);
+
+        // Add the new object to the Library array
+        myLibrary.push(newBook);
+
+        // Loop through library array to refresh the display
+        arrayLoop();
+        
+        // Reset form
+        document.getElementById("dialogForm").reset();
+
+        // Close dialog
+        favDialog.close(); // Have to send the select box value here.
+    } else if (newTitle.value === "" || newAuthor.value === "" || newPages.value === ""){
+            // error message
+            document.getElementById("errorMessage").textContent = "Please fill out all required (*) fields";
+    }
+}

@@ -22,15 +22,16 @@
                             <div id="form-title">
                                 <p>Add new book</p>
                             </div>
-                            <input id="title" type="text" placeholder="Title" required>
-                            <input id="author" type="text" placeholder="Author" required>
-                            <input id="pages" type="number" placeholder="Pages" required>
+                            <input id="title" type="text" placeholder="Title*" required>
+                            <input id="author" type="text" placeholder="Author*" required>
+                            <input id="pages" type="number" placeholder="Pages*" required>
                             <label id="read-label">
                                 <p>Have you read it?</p>
                                 <input id="read" type="checkbox">
                             </label>
                             <button id="submitBtn" value="default">Submit</button>
                             <!-- <button id="cancelBtn" value="cancel" formmethod="dialog">Cancel</button> -->
+                            <p id="errorMessage"></p>
                         </form>
                     </dialog>
                 </div>
