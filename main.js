@@ -47,7 +47,7 @@ function Book(title, author, pages, read) {
 function arrayLoop() {
     // Reset DOM
     let mainContent = document.getElementById("main-content");
-    mainContent.textContent = ``;
+    mainContent.textContent = '';
 
     for (let i = 0; i < myLibrary.length; i++) {
         // Get and create elements        
@@ -59,7 +59,8 @@ function arrayLoop() {
         let removeButton = document.createElement("button");
 
         // Create card
-        cardDiv.classList.add("card");
+        cardDiv.className= 'card';
+        cardDiv.id = 'book-' + [i];
 
         // Add values to p elements
         titlePara.textContent = `"` + myLibrary[i].title + `"`;
@@ -68,14 +69,14 @@ function arrayLoop() {
 
         // Add values to buttons
         if (myLibrary[i].read === 'false') {
-            readButton.classList.add("not-read-button")
+            readButton.className = 'not-read-button'
             readButton.textContent = "Not read"
         } else if (myLibrary[i].read === 'true') {
-            readButton.classList.add("read-button")
+            readButton.className = 'read-button'
             readButton.textContent = "Read"
         }
 
-        removeButton.classList.add("remove-button");
+        removeButton.className = `remove-button book-` + [i];
         removeButton.textContent = "Remove";
 
         // Add variables to card
@@ -90,6 +91,7 @@ function arrayLoop() {
       }
 }
 
+// Run the arrayLoop function to display all books
 arrayLoop();
 
 // Get form elements
@@ -138,8 +140,32 @@ function formValidation() {
 
         // Close dialog
         favDialog.close(); // Have to send the select box value here.
+
+        // Reattach removeEventListener
+        attachRemoveEventListeners();
     } else if (newTitle.value === "" || newAuthor.value === "" || newPages.value === ""){
             // error message
             document.getElementById("errorMessage").textContent = "Please fill out all required (*) fields";
     }
 }
+
+function attachRemoveEventListeners() {
+    document.querySelectorAll(".remove-button").forEach(function(e) {
+    e.addEventListener("click", function() {
+        // Get the index of the book from the class name
+        const index = parseInt(e.classList[1].split('-')[1]);
+
+        // Remove book from library array
+        myLibrary.splice(index, 1);
+
+        // Refresh library display
+        arrayLoop();
+
+        // Reattach the remove event listener
+        attachRemoveEventListeners();
+    });
+});
+}
+
+// Initial attachment of remove event listener
+attachRemoveEventListeners();
